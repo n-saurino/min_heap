@@ -66,10 +66,10 @@ TEST(MinHeapTest, IsValidIdxTest) {
 
     heap.Insert(10);
     heap.Insert(5);
-
-    EXPECT_TRUE(heap.IsValidIdx(0));
-    EXPECT_TRUE(heap.IsValidIdx(1));
-    EXPECT_FALSE(heap.IsValidIdx(2));  // Heap size is 2, so index 2 is invalid
+    
+    EXPECT_EQ(true, heap.IsValidIdx(0));
+    EXPECT_EQ(true, heap.IsValidIdx(1));
+    EXPECT_EQ(false, heap.IsValidIdx(2));  // Heap size is 2, so index 2 is invalid
 }
 
 // Test Swap
@@ -109,8 +109,10 @@ TEST(MinHeapTest, InsertIntoFullHeapTest) {
     heap.Insert(3);
 
     EXPECT_NO_THROW(heap.Insert(4));  // Insert shouldn't throw an exception 
-    // heap size should double
-    EXPECT_EQ(heap.Size(), 6);
+    // heap size should be 4 
+    EXPECT_EQ(heap.Size(), 4);
+    // heap capacity should have doubled
+    EXPECT_EQ(heap.Capacity(), 6);
 }
 
 // Test edge case: ExtractMin from an empty heap

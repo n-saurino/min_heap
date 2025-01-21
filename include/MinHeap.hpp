@@ -44,6 +44,9 @@ public:
     // return the size of the heap
     int Size();
 
+    // return capacity of the heap
+    int Capacity();
+    
 private:
     std::vector<int> heap_vec_{};
     int capacity_{};

@@ -139,3 +139,7 @@ bool MinHeap::Full(){
 int MinHeap::Size(){
     return size_;
 }
+
+int MinHeap::Capacity(){
+    return capacity_;
+}
