@@ -51,7 +51,7 @@ int MinHeap::GetRightChildIdx(int curr_idx){
 // heapify up (bubble value up from bottom of tree)
 void MinHeap::HeapifyUp(){
     int idx{size_-1};
-    while(IsValidIdx(GetParentIdx(idx))){
+    while(idx != 0 && IsValidIdx(GetParentIdx(idx))){
         if(heap_vec_[idx] < Parent(idx)){
             Swap(idx, GetParentIdx(idx));    
         }
@@ -95,9 +95,12 @@ int MinHeap::ExtractMin(){
         throw std::logic_error("Heap is empty");
     }
     int min_val{heap_vec_[0]};
-    heap_vec_[0] = heap_vec_[size_-1];
     --size_;
-    HeapifyDown();
+    if(size_){
+        heap_vec_[0] = heap_vec_[size_];
+        HeapifyDown();         
+    }
+       
     return min_val;
 }
 
@@ -131,4 +134,8 @@ bool MinHeap::Full(){
     capacity_ *= 2;
     heap_vec_.resize(capacity_);
     return false;
+}
+
+int MinHeap::Size(){
+    return size_;
 }

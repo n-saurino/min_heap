@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include <stdexcept>
 
 class MinHeap
 {
@@ -39,7 +40,10 @@ public:
 
     // check if heap is full
     bool Full();
-     
+
+    // return the size of the heap
+    int Size();
+
 private:
     std::vector<int> heap_vec_{};
     int capacity_{};

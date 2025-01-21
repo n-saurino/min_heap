@@ -1,5 +1,5 @@
 # Use an Ubuntu base image
-FROM ubuntu:20.04
+FROM arm64v8/ubuntu:20.04
 
 # Set the working directory
 WORKDIR /workspace
