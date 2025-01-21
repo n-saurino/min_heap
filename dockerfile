@@ -8,7 +8,6 @@ WORKDIR /workspace
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=America/Chicago  
 
-# Install required dependencies and ensure matching GCC and libstdc++ versions
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     software-properties-common \
@@ -18,7 +17,7 @@ RUN apt-get update && \
     apt-get update && \
     apt-get install -y \
     gcc-9 g++-9 libstdc++-9-dev \
-    libstdc++6=9.4.0-1ubuntu1~20.04 \
+    libstdc++6 \
     cmake \
     ninja-build \
     gdb \
@@ -77,6 +76,10 @@ RUN wget https://archives.boost.io/release/1.85.0/source/boost_1_85_0.tar.gz && 
 
 # Copy project files into the container
 COPY . /workspace
+
+# Add explicit compiler flags to enable exceptions
+RUN export CXXFLAGS="-fexceptions" && \
+    export CFLAGS="-fexceptions"
 
 # Configure and build the project
 RUN cmake -S . -B build && \
