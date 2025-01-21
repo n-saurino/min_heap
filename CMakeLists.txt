@@ -6,6 +6,11 @@ set(CMAKE_CXX_STANDARD 20)  # Use C++17, you can change this to 11, 14, 20, etc.
 set(CMAKE_CXX_STANDARD_REQUIRED True)  # Ensure the compiler enforces the standard
 set(CMAKE_CXX_EXTENSIONS OFF)  # Disable compiler-specific extensions
 
+# Explicitly enable exceptions for GCC/Clang
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fexceptions")
+endif()
+
 # Find Boost
 set(BOOST_ROOT "/opt/homebrew/Cellar/boost/1.85.0")
 find_package(Boost 1.85.0 REQUIRED COMPONENTS system filesystem)

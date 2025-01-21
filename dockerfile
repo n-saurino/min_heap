@@ -8,17 +8,22 @@ WORKDIR /workspace
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=America/Chicago  
 
-# Install required dependencies
-RUN apt-get update && apt-get install -y \
+# Install required dependencies and ensure matching GCC and libstdc++ versions
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    software-properties-common \
     build-essential \
+    wget \
+    && add-apt-repository ppa:ubuntu-toolchain-r/test && \
+    apt-get update && \
+    apt-get install -y \
+    gcc-9 g++-9 libstdc++-9-dev \
+    libstdc++6=9.4.0-1ubuntu1~20.04 \
     cmake \
     ninja-build \
     gdb \
     git \
     vim \
-    wget \
-    libssl-dev \
-    libstdc++-9-dev \
     ccache \
     clang \
     valgrind \
@@ -39,6 +44,10 @@ RUN apt-get update && apt-get install -y \
     neovim \
     && rm -rf /var/lib/apt/lists/*
 
+# Set GCC and G++ alternatives to ensure consistent usage of GCC 9
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 100 && \
+    update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 100
+    
 # Install Autoconf 2.71
 RUN wget https://ftp.gnu.org/gnu/autoconf/autoconf-2.71.tar.gz && \
     tar -xf autoconf-2.71.tar.gz && \
